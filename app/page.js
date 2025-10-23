@@ -1,4 +1,6 @@
 // app/page.js
+export const revalidate = 86400; // revalidate every 24 hours
+
 export default async function Page() {
   // build date string
   const today = new Date();
@@ -10,7 +12,7 @@ export default async function Page() {
   // fetch on server
   let solution = null;
   try {
-    const res = await fetch(url, { cache: 'no-store' }); // no-store = fresh fetch daily
+    const res = await fetch(url, { next: { revalidate: 86400 } }); // ISR: cache for 1 day
     if (res.ok) {
       const data = await res.json();
       solution = data.solution.toUpperCase();
