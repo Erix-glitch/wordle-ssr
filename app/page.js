@@ -18,7 +18,8 @@ export default async function Page() {
           {letters.map((letter, index) => (
             <div
               key={`${letter}-${index}`}
-              className="flex h-[62px] w-[62px] items-center justify-center bg-[#538d4e] text-4xl font-bold uppercase text-white shadow-[0_6px_0_rgba(0,0,0,0.25)]"
+              className="flex h-[62px] w-[62px] items-center justify-center bg-[#538d4e] text-4xl font-bold uppercase text-white shadow-[0_6px_0_rgba(0,0,0,0.25)] animate-flip"
+              style={{ animationDelay: `${index * 0.25}s` }}
             >
               {letter}
             </div>
