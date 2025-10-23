@@ -2,7 +2,9 @@
 export default async function Page() {
   // build date string
   const today = new Date();
-  const dateString = today.toISOString().split('T')[0];
+  const localTime = new Date(today.getTime() - today.getTimezoneOffset() * 60000);
+  const dateString = localTime.toISOString().split('T')[0]; // Local date in YYYY-MM-DD
+  console.log('Local dateString:', dateString);
 
   // wordle api
   const url = `https://www.nytimes.com/svc/wordle/v2/${dateString}.json`;
@@ -14,6 +16,8 @@ export default async function Page() {
     if (res.ok) {
       const data = await res.json();
       solution = data.solution.toUpperCase();
+    } else {
+      console.error('Wordle API returned', res.status);
     }
   } catch (error) {
     console.error('Failed to fetch Wordle:', error);
