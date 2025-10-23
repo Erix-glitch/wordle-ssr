@@ -4,8 +4,6 @@ export default async function Page() {
   const today = new Date();
   const localTime = new Date(today.getTime() - today.getTimezoneOffset() * 60000);
   const dateString = localTime.toISOString().split('T')[0]; // Local date in YYYY-MM-DD
-  console.log('Local dateString:', dateString);
-
   // wordle api
   const url = `https://www.nytimes.com/svc/wordle/v2/${dateString}.json`;
 
