@@ -12,7 +12,7 @@ export async function Word() {
     const res = await fetch(url, { next: { revalidate: 86400 } }); // ISR: cache for 1 day
     if (res.ok) {
         const data = await res.json();
-        solution = data.solution.toUpperCase();
+        solution = data.solution;
     } else {
         console.error('Wordle API returned', res.status);
     }
