@@ -28,11 +28,11 @@ export default async function Page() {
         Today's Wordle word
       </h1>
       {solution ? (
-        <div className="mt-10 flex space-x-[6px]">
+        <div className="mt-10 flex space-x-1.5">
           {letters.map((letter, index) => (
             <div
               key={`${letter}-${index}`}
-              className="flex h-[62px] w-[62px] items-center justify-center border-2 border-[#538d4e] bg-[#6aaa64] text-4xl font-bold uppercase text-white shadow-[0_6px_0_rgba(0,0,0,0.25)]"
+              className="flex h-[62px] w-[62px] items-center justify-center bg-[#538d4e] text-4xl font-bold uppercase text-white shadow-[0_6px_0_rgba(0,0,0,0.25)]"
             >
               {letter}
             </div>
