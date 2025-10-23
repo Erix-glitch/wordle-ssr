@@ -20,13 +20,26 @@ export default async function Page() {
   }
 
   // render html
+  const letters = solution?.split('') ?? [];
+
   return (
-    <main className="flex flex-col items-center justify-center min-h-screen bg-gray-900 text-white text-center p-8">
-      <h1 className="text-4xl font-bold mb-4">Today's Wordle word</h1>
+    <main className="flex flex-col items-center justify-center min-h-screen bg-[#121213] text-white text-center px-6 py-12">
+      <h1 className="text-4xl font-bold tracking-tight drop-shadow-sm">
+        Today's Wordle word
+      </h1>
       {solution ? (
-        <p className="text-3xl text-green-400 font-serif font-bold">{solution}</p>
+        <div className="mt-10 flex space-x-[6px]">
+          {letters.map((letter, index) => (
+            <div
+              key={`${letter}-${index}`}
+              className="flex h-[62px] w-[62px] items-center justify-center border-2 border-[#538d4e] bg-[#6aaa64] text-4xl font-bold uppercase text-white shadow-[0_6px_0_rgba(0,0,0,0.25)]"
+            >
+              {letter}
+            </div>
+          ))}
+        </div>
       ) : (
-        <p className="text-red-400">Could not load today's word.</p>
+        <p className="mt-6 text-red-400">Could not load today's word.</p>
       )}
     </main>
   );
