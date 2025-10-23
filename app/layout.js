@@ -1,8 +1,8 @@
 import './globals.css';
 
 export const metadata = {
-  title: "Wordle SSR",
-  description: "Server-rendered Wordle solution using Next.js",
+  title: "Wordle",
+  description: "Today's Wordle solution",
 };
 
 export default function RootLayout({ children }) {
