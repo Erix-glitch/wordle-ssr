@@ -9,7 +9,7 @@ export async function Word() {
     // fetch on server
     let solution = null;
     try {
-    const res = await fetch(url, { next: { revalidate: 86400 } }); // ISR: cache for 1 day
+    const res = await fetch(url, { next: { revalidate: 60 } }); // ISR: cache for 1 day
     if (res.ok) {
         const data = await res.json();
         solution = data.solution;
