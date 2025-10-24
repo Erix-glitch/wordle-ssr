@@ -1,6 +1,8 @@
 // app/page.js
 import { Word } from './Word.js';
 import { MoveLeft, MoveRight } from 'lucide-react';
+export const dynamic = 'force-dynamic';
+
 export default async function Page() {
   const [solution, wordNum, printDate] = await Word();
 

@@ -35,6 +35,4 @@ jobs:
             git pull
             npm ci
             npm run build
-            pm2 stop all
-            pm2 start all
-
+            pm2 restart all
