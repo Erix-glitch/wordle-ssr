@@ -1,6 +1,5 @@
 // app/page.js
 import { Word } from './Word.js';
-import { Button } from '@/components/ui/button'
 export const revalidate = 86400; // revalidate every 24 hours
 
 export default async function Page() {
@@ -30,7 +29,7 @@ export default async function Page() {
         <p className="mt-6 text-red-400">Could not load today's word.</p>
       )}
       <div className="mt-4">
-        <p className="text-sm text-gray-400">Wordle #{wordNum}</p>
+        <p className="text-base text-gray-400 font-mono">Wordle #{wordNum}</p>
         <p className="text-sm text-gray-600">{printDate}</p>
       </div>
     </main>
