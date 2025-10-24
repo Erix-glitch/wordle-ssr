@@ -1,6 +1,6 @@
 // app/page.js
 import { Word } from './Word.js';
-
+import { MoveLeft, MoveRight } from 'lucide-react';
 export default async function Page() {
   const [solution, wordNum, printDate] = await Word();
 
@@ -13,7 +13,7 @@ export default async function Page() {
         Today's Wordle Word
       </h1>
       {solution ? (
-        <div className="mt-10 flex space-x-1.5">
+        <div className="mt-8 flex space-x-1.5">
           {letters.map((letter, index) => (
             <div
               key={`${letter}-${index}`}
@@ -27,9 +27,15 @@ export default async function Page() {
       ) : (
         <p className="mt-6 text-red-400">Could not load today's word.</p>
       )}
-      <div className="mt-4">
-        <p className="text-base text-gray-400 font-mono">Wordle #{wordNum}</p>
-        <p className="text-sm text-gray-600 font-mono">{printDate}</p>
+      <div className="items-center mt-4">
+        <p className="flex gap-2 text-base text-gray-400 font-mono">
+          <MoveLeft className="w-8"></MoveLeft>
+          Wordle #{wordNum}
+          <MoveRight className="w-8"></MoveRight>
+        </p>
+        <p className="items-center text-sm text-gray-600 font-mono">
+          {printDate}
+        </p>
       </div>
     </main>
   );
