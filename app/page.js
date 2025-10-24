@@ -1,6 +1,5 @@
 // app/page.js
 import { Word } from './Word.js';
-export const revalidate = 86400; // revalidate every 24 hours
 
 export default async function Page() {
   const [solution, wordNum, printDate] = await Word();
@@ -9,9 +8,9 @@ export default async function Page() {
   const letters = solution?.split('') ?? [];
 
   return (
-    <main className="flex flex-col items-center justify-center min-h-screen bg-[#121213] text-white text-center px-6 py-12">
+    <main className="flex flex-col items-center justify-center min-h-screen text-auto text-center px-6 py-12">
       <h1 className="text-4xl font-bold tracking-tight drop-shadow-sm">
-        Today's Wordle word
+        Today's Wordle Word
       </h1>
       {solution ? (
         <div className="mt-10 flex space-x-1.5">
@@ -30,7 +29,7 @@ export default async function Page() {
       )}
       <div className="mt-4">
         <p className="text-base text-gray-400 font-mono">Wordle #{wordNum}</p>
-        <p className="text-sm text-gray-600">{printDate}</p>
+        <p className="text-sm text-gray-600 font-mono">{printDate}</p>
       </div>
     </main>
   );

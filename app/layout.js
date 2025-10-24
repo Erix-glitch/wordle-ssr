@@ -1,17 +1,31 @@
 import './globals.css';
-import { Word } from './Word.js'
+import { Geist, Geist_Mono } from "next/font/google";
+import { Word } from './Word.js';
 
-const [solution] = await Word();
+const geistSans = Geist({
+  variable: "--font-geist-sans",
+  subsets: ["latin"],
+});
 
-export const metadata = {
-  title: "Wordle Solution",
-  description: "Today's Wordle Solution: ".concat(solution.toUpperCase()),
-};
+const geistMono = Geist_Mono({
+  variable: "--font-geist-mono",
+  subsets: ["latin"],
+});
+
+export async function generateMetadata() {
+  const [solution] = await Word();
+  return {
+    title: "Wordle Solution",
+    description: `Today's Wordle Solution: ${solution.toUpperCase()}`,
+  };
+}
 
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+        {children}
+      </body>
     </html>
   );
 }

@@ -9,17 +9,17 @@ export async function Word() {
     // fetch on server
     let solution, wordNum, printDate = null;
     try {
-    const res = await fetch(url, { next: { revalidate: 60 } }); // ISR: cache for 1 day
-    if (res.ok) {
-        const data = await res.json();
-        solution = data.solution;
-        wordNum = data.days_since_launch;
-        printDate = data.print_date;
-    } else {
-        console.error('Wordle API returned', res.status);
-    }
+        const res = await fetch(url, { next: { revalidate: 60 } }); // ISR: cache for 1 day
+        if (res.ok) {
+            const data = await res.json();
+            solution = data.solution;
+            wordNum = data.days_since_launch;
+            printDate = data.print_date;
+        } else {
+            console.error('Wordle API returned', res.status);
+        }
     } catch (error) {
-    console.error('Failed to fetch Wordle:', error);
+        console.error('Failed to fetch Wordle:', error);
     }
     return [solution, wordNum, printDate];
 }
