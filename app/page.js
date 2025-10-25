@@ -11,7 +11,7 @@ export default async function Page() {
 
   return (
     <main className="flex flex-col items-center justify-center min-h-screen text-auto text-center px-6 py-12">
-      <h1 className="text-4xl font-bold tracking-tight drop-shadow-sm">
+      <h1 className="text-4xl md:text-6xl font-bold tracking-tight drop-shadow-sm">
         Today's Wordle Word
       </h1>
       {solution ? (
@@ -19,7 +19,7 @@ export default async function Page() {
           {letters.map((letter, index) => (
             <div
               key={`${letter}-${index}`}
-              className="flex h-[62px] w-[62px] items-center justify-center bg-[#538d4e] text-4xl font-bold uppercase text-white animate-flip"
+              className="flex h-[62px] md:h-[72px] md:w-[72px] w-[62px] items-center justify-center bg-[#538d4e] text-4xl md:text-[40px] font-wordle font-bold uppercase text-white animate-flip"
               style={{ animationDelay: `${index * 0.25}s` }}
             >
               {letter}
@@ -30,10 +30,14 @@ export default async function Page() {
         <p className="mt-6 text-red-400">Could not load today's word.</p>
       )}
       <div className="items-center mt-4">
-        <p className="flex gap-2 text-base text-gray-400 font-mono">
-          <MoveLeft className="w-8"></MoveLeft>
+        <p className="flex gap-2 text-base text-gray-400 font-mono items-center">
+          <button className="p-1 rounded hover:bg-gray-800 transition-colors" aria-label="Previous Wordle">
+            <MoveLeft className="w-8"></MoveLeft>
+          </button>
           Wordle #{wordNum}
-          <MoveRight className="w-8"></MoveRight>
+          <button className="p-1 rounded hover:bg-gray-800 transition-colors" aria-label="Next Wordle">
+            <MoveRight className="w-8"></MoveRight>
+          </button>
         </p>
         <p className="items-center text-sm text-gray-600 font-mono">
           {printDate}

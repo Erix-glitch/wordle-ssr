@@ -1,5 +1,5 @@
 import './globals.css';
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist, Geist_Mono, Libre_Franklin } from "next/font/google";
 import { Word } from './Word.js';
 
 const geistSans = Geist({
@@ -10,6 +10,11 @@ const geistSans = Geist({
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
+});
+
+const libreFranklin = Libre_Franklin({
+  variable: "--font-libre-franklin",
+  subsets: ["latin"]
 });
 
 export async function generateMetadata() {
@@ -23,7 +28,7 @@ export async function generateMetadata() {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+      <body className={`${geistSans.variable} ${geistMono.variable} ${libreFranklin.variable} antialiased`}>
         {children}
       </body>
     </html>
