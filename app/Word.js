@@ -1,15 +1,43 @@
-export async function Word() {
-    // build date string
-    const today = new Date();
-    const localTime = new Date(today.getTime() - today.getTimezoneOffset() * 60000);
-    const dateString = localTime.toISOString().split('T')[0]; // Local date in YYYY-MM-DD
-    // wordle api
-    const url = `https://www.nytimes.com/svc/wordle/v2/${dateString}.json`;
+export const getLocalDateIso = (date) => {
+    const localTime = new Date(date.getTime() - date.getTimezoneOffset() * 60000);
+    return localTime.toISOString().split('T')[0];
+};
 
-    // fetch on server
-    let solution, wordNum, printDate = null;
+export const parseLocalDate = (value) => {
+    if (typeof value !== 'string') {
+        return null;
+    }
+
+    const parts = value.split('-').map(Number);
+    if (parts.length !== 3) {
+        return null;
+    }
+
+    const [year, month, day] = parts;
+    if ([year, month, day].some(Number.isNaN)) {
+        return null;
+    }
+
+    return new Date(year, month - 1, day);
+};
+
+export async function Word(dateString) {
+    let targetDate = new Date();
+    if (dateString) {
+        const parsed = parseLocalDate(dateString);
+        if (parsed) {
+            targetDate = parsed;
+        }
+    }
+
+    const isoDate = getLocalDateIso(targetDate);
+    const url = `https://www.nytimes.com/svc/wordle/v2/${isoDate}.json`;
+
+    let solution = null;
+    let wordNum = null;
+    let printDate = null;
     try {
-        const res = await fetch(url, { next: { revalidate: 60 } }); // ISR: cache for 1 minute
+        const res = await fetch(url, { next: { revalidate: 60 } });
         if (res.ok) {
             const data = await res.json();
             solution = data.solution;
@@ -21,5 +49,6 @@ export async function Word() {
     } catch (error) {
         console.error('Failed to fetch Wordle:', error);
     }
-    return [solution, wordNum, printDate];
+
+    return { solution, wordNum, printDate, isoDate };
 }
