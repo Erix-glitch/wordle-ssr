@@ -36,19 +36,42 @@ export async function Word(dateString) {
     let solution = null;
     let wordNum = null;
     let printDate = null;
+    let apiError = null;
     try {
         const res = await fetch(url, { next: { revalidate: 60 } });
-        if (res.ok) {
-            const data = await res.json();
+        let data = null;
+        try {
+            data = await res.json();
+        } catch {
+            data = null;
+        }
+
+        const isErrorStatus =
+            data && typeof data === 'object' && data.status === 'ERROR';
+
+        if (res.ok && !isErrorStatus && data) {
             solution = data.solution;
             wordNum = data.days_since_launch;
             printDate = data.print_date;
         } else {
-            console.error('Wordle API returned', res.status);
+            apiError =
+                data && typeof data === 'object'
+                    ? data
+                    : {
+                          status: 'ERROR',
+                          errors: [`HTTP ${res.status}`],
+                          results: [],
+                      };
+            console.error('Wordle API returned', res.status, apiError);
         }
     } catch (error) {
         console.error('Failed to fetch Wordle:', error);
+        apiError = {
+            status: 'ERROR',
+            errors: [error instanceof Error ? error.message : String(error)],
+            results: [],
+        };
     }
 
-    return { solution, wordNum, printDate, isoDate };
+    return { solution, wordNum, printDate, isoDate, apiError };
 }
