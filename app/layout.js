@@ -18,7 +18,7 @@ const libreFranklin = Libre_Franklin({
 });
 
 export async function generateMetadata() {
-  const [solution] = await Word();
+  const { solution } = await Word();
   return {
     title: "Wordle Solution",
     description: `Today's Wordle Solution: ${solution.toUpperCase()}`,

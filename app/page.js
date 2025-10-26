@@ -1,11 +1,25 @@
 // app/page.js
-import { Word } from './Word.js';
+import Link from 'next/link';
+import { Word, getLocalDateIso, parseLocalDate } from './Word.js';
 import { MoveLeft, MoveRight } from 'lucide-react';
 export const dynamic = 'force-dynamic';
 
-export default async function Page() {
-  const [solution, wordNum, printDate] = await Word();
+export default async function Page({ searchParams }) {
+  const resolvedSearchParams = searchParams ? await searchParams : {};
+  const dateParam = typeof resolvedSearchParams.date === 'string' ? resolvedSearchParams.date : undefined;
+  const { solution, wordNum, printDate, isoDate } = await Word(dateParam);
 
+  const currentDate = parseLocalDate(isoDate) ?? new Date();
+  const previousDate = new Date(currentDate);
+  previousDate.setDate(currentDate.getDate() - 1);
+  const nextDate = new Date(currentDate);
+  nextDate.setDate(currentDate.getDate() + 1);
+
+  const prevDateString = getLocalDateIso(previousDate);
+  const nextDateString = getLocalDateIso(nextDate);
+  const todayString = getLocalDateIso(new Date());
+  const isSpoiler = nextDateString > todayString;
+  
   // render html
   const letters = solution?.split('') ?? [];
 
@@ -31,13 +45,30 @@ export default async function Page() {
       )}
       <div className="items-center mt-4">
         <p className="flex gap-2 text-base text-gray-400 font-mono items-center">
-          <button className="p-1 rounded hover:bg-gray-800 transition-colors" aria-label="Previous Wordle">
-            <MoveLeft className="w-8"></MoveLeft>
-          </button>
+          <Link
+            className="p-1 rounded hover:bg-gray-800 transition-colors"
+            aria-label="Previous Wordle"
+            href={`/?date=${prevDateString}`}
+          >
+            <MoveLeft className="w-8" />
+          </Link>
           Wordle #{wordNum}
-          <button className="p-1 rounded hover:bg-gray-800 transition-colors" aria-label="Next Wordle">
-            <MoveRight className="w-8"></MoveRight>
-          </button>
+          {isSpoiler ? (
+            <span
+              aria-disabled="true"
+              className="p-1 rounded text-gray-600"
+            >
+              <MoveRight className="w-8" />
+            </span>
+          ) : (
+            <Link
+              className="p-1 rounded hover:bg-gray-800 transition-colors"
+              aria-label="Next Wordle"
+              href={`/?date=${nextDateString}`}
+            >
+              <MoveRight className="w-8" />
+            </Link>
+          )}
         </p>
         <p className="items-center text-sm text-gray-600 font-mono">
           {printDate}
