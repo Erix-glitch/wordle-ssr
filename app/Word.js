@@ -37,6 +37,8 @@ export async function Word(dateString) {
     let wordNum = null;
     let printDate = null;
     let apiError = null;
+    let wordId = null;
+
     try {
         const res = await fetch(url, { next: { revalidate: 60 } });
         let data = null;
@@ -51,8 +53,9 @@ export async function Word(dateString) {
 
         if (res.ok && !isErrorStatus && data) {
             solution = data.solution;
-            wordNum = data.days_since_launch;
             printDate = data.print_date;
+            wordId = data.id;
+            wordNum = data.days_since_launch ?? String (0);
         } else {
             apiError =
                 data && typeof data === 'object'
@@ -73,5 +76,5 @@ export async function Word(dateString) {
         };
     }
 
-    return { solution, wordNum, printDate, isoDate, apiError };
+    return { solution, wordNum, printDate, isoDate, apiError, wordId };
 }

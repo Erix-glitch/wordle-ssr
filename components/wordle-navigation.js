@@ -7,6 +7,7 @@ import { MoveLeft, MoveRight, OctagonAlert } from "lucide-react";
 
 export function WordleNavigation({
   wordNum,
+  wordId,
   prevDateString,
   nextDateString,
   printDate,
@@ -55,6 +56,21 @@ export function WordleNavigation({
       <MoveRight className="w-8 cursor-not-allowed" />
     </span>
   );
+
+  const previousControl =
+    wordId === 1 ? (
+      <span aria-disabled="true" className="p-1 rounded text-gray-600">
+        <MoveLeft className="w-8 cursor-not-allowed" />
+      </span>
+    ) : (
+      <Link
+        className="p-1 rounded hover:bg-gray-800 transition-colors"
+        aria-label="Previous Wordle"
+        href={`/?date=${prevDateString}`}
+      >
+        <MoveLeft className="w-8" />
+      </Link>
+    );
 
   let nextControl = null;
   if (isSpoiler && canAdvance) {
@@ -138,13 +154,7 @@ export function WordleNavigation({
   return (
     <div className="mt-4">
       <div className="flex items-center gap-2 text-base text-gray-400 font-mono">
-        <Link
-          className="p-1 rounded hover:bg-gray-800 transition-colors"
-          aria-label="Previous Wordle"
-          href={`/?date=${prevDateString}`}
-        >
-          <MoveLeft className="w-8" />
-        </Link>
+        {previousControl}
         <span>{wordNum ? `Wordle #${wordNum}` : "Wordle"}</span>
         {nextControl}
       </div>

@@ -6,7 +6,7 @@ export const dynamic = 'force-dynamic';
 export default async function Page({ searchParams }) {
   const resolvedSearchParams = searchParams ? await searchParams : {};
   const dateParam = typeof resolvedSearchParams.date === 'string' ? resolvedSearchParams.date : undefined;
-  const { solution, wordNum, printDate, isoDate, apiError } = await Word(dateParam);
+  const { solution, wordNum, printDate, isoDate, apiError, wordId} = await Word(dateParam);
 
   const currentDate = parseLocalDate(isoDate) ?? new Date();
   const previousDate = new Date(currentDate);
@@ -66,6 +66,7 @@ export default async function Page({ searchParams }) {
       )}
       <WordleNavigation
         wordNum={wordNum}
+        wordId={wordId}
         prevDateString={prevDateString}
         nextDateString={nextDateString}
         printDate={printDate ?? isoDate}
