@@ -13,6 +13,8 @@ export default async function Page({ searchParams }) {
   previousDate.setDate(currentDate.getDate() - 1);
   const nextDate = new Date(currentDate);
   nextDate.setDate(currentDate.getDate() + 1);
+  const today = new Date();
+  const isFutureDate = currentDate > today;
 
   const prevDateString = getLocalDateIso(previousDate);
   const nextDateString = getLocalDateIso(nextDate);
@@ -73,6 +75,12 @@ export default async function Page({ searchParams }) {
         isSpoiler={shouldShowSpoilerWarning}
         canAdvance={canAdvance}
       />
+      {isFutureDate && (
+        <p className="text-md font-mono text-yellow-200 italic">
+          Wordles in the future are subject to change.
+        </p>
+      )}
+
     </main>
   );
 }
