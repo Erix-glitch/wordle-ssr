@@ -76,7 +76,7 @@ export default async function Page({ searchParams }) {
         canAdvance={canAdvance}
       />
       {isFutureDate && (
-        <p className="text-md font-mono text-yellow-200 italic">
+        <p className="font-mono text-yellow-200 italic">
           Wordles in the future are subject to change.
         </p>
       )}

@@ -153,12 +153,12 @@ export function WordleNavigation({
 
   return (
     <div className="mt-4">
-      <div className="flex items-center gap-2 text-base text-gray-400 font-mono">
+      <div className="flex items-center gap-2 text-base md:text-lg text-gray-400 font-mono">
         {previousControl}
         <span>{wordNum ? `Wordle #${wordNum}` : "Wordle"}</span>
         {nextControl}
       </div>
-      <p className="items-center text-sm text-gray-600 font-mono">{printDate}</p>
+      <p className="items-center text-sm text-gray-500 font-mono md:text-base">{printDate}</p>
     </div>
   );
 }
