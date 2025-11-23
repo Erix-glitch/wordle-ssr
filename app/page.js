@@ -1,5 +1,6 @@
 // app/page.js
 import { Word, getLocalDateIso, parseLocalDate } from './Word.js';
+import { Footer } from '@/components/footer';
 import { WordleNavigation } from '@/components/wordle-navigation';
 export const dynamic = 'force-dynamic';
 
@@ -34,53 +35,55 @@ export default async function Page({ searchParams }) {
   const error = "ERROR".split('');
 
   return (
-    <main className="flex flex-col items-center justify-center min-h-screen text-auto text-center px-6 py-12">
-      <h1 className="text-4xl md:text-6xl font-bold tracking-tight drop-shadow-sm">
-        Today&apos;s Wordle Word
-      </h1>
-      {solution ? (
-        <div className="mt-8 flex space-x-1.5">
-          {letters.map((letter, index) => (
-            <div
-              key={`${letter}-${index}`}
-              className="flex h-[62px] md:h-[72px] md:w-[72px] w-[62px] items-center justify-center bg-[#538d4e] text-4xl md:text-[40px] font-wordle font-bold uppercase text-white animate-flip"
-              style={{ animationDelay: `${index * 0.25}s` }}
-            >
-              {letter}
-            </div>
-          ))}
-        </div>
-      ) : (
-        <>
-        <div className="mt-8 flex space-x-1.5">
-          {error.map((letter, index) => (
-            <div
-              key={`${letter}-${index}`}
-              className="flex h-[62px] md:h-[72px] md:w-[72px] w-[62px] items-center justify-center bg-[#a94f4f] text-4xl md:text-[40px] font-wordle font-bold uppercase text-white animate-flip"
-              style={{ animationDelay: `${index * 0.25}s` }}
-            >
-              {letter}
-            </div>
-          ))}
-        </div>
-        <p className="mt-6 font-mono text-xl text-red-500">{failureMessage}</p>
-        </>
-      )}
-      <WordleNavigation
-        wordNum={wordNum}
-        wordId={wordId}
-        prevDateString={prevDateString}
-        nextDateString={nextDateString}
-        printDate={printDate ?? isoDate}
-        isSpoiler={shouldShowSpoilerWarning}
-        canAdvance={canAdvance}
-      />
-      {isFutureDate && (
-        <p className="font-mono text-yellow-200 italic">
-          Wordles in the future are subject to change.
-        </p>
-      )}
-
-    </main>
+    <>
+      <main className="flex flex-col items-center justify-center min-h-screen text-auto text-center px-6 py-12">
+        <h1 className="text-4xl md:text-6xl font-bold tracking-tight drop-shadow-sm">
+          Today&apos;s Wordle Word
+        </h1>
+        {solution ? (
+          <div className="mt-8 flex space-x-1.5">
+            {letters.map((letter, index) => (
+              <div
+                key={`${letter}-${index}`}
+                className="flex h-[62px] md:h-[72px] md:w-[72px] w-[62px] items-center justify-center bg-[#538d4e] text-4xl md:text-[40px] font-wordle font-bold uppercase text-white animate-flip"
+                style={{ animationDelay: `${index * 0.25}s` }}
+              >
+                {letter}
+              </div>
+            ))}
+          </div>
+        ) : (
+          <>
+          <div className="mt-8 flex space-x-1.5">
+            {error.map((letter, index) => (
+              <div
+                key={`${letter}-${index}`}
+                className="flex h-[62px] md:h-[72px] md:w-[72px] w-[62px] items-center justify-center bg-[#a94f4f] text-4xl md:text-[40px] font-wordle font-bold uppercase text-white animate-flip"
+                style={{ animationDelay: `${index * 0.25}s` }}
+              >
+                {letter}
+              </div>
+            ))}
+          </div>
+          <p className="mt-6 font-mono text-xl text-red-500">{failureMessage}</p>
+          </>
+        )}
+        <WordleNavigation
+          wordNum={wordNum}
+          wordId={wordId}
+          prevDateString={prevDateString}
+          nextDateString={nextDateString}
+          printDate={printDate ?? isoDate}
+          isSpoiler={shouldShowSpoilerWarning}
+          canAdvance={canAdvance}
+        />
+        {isFutureDate && (
+          <p className="font-mono text-yellow-200 italic">
+            Wordles in the future are subject to change.
+          </p>
+        )}
+      </main>
+      <Footer / >
+    </>
   );
 }
