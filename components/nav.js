@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-export function Footer() {
+export function Nav() {
     const pathname = usePathname();
 
     const links = [
