@@ -78,8 +78,8 @@ export default async function Page({ searchParams }) {
           canAdvance={canAdvance}
         />
         {isFutureDate && (
-          <p className="font-mono text-yellow-200 italic">
-            Wordles in the future are subject to change.
+          <p className="font-mono bg-orange-400 px-2 mt-2 rounded-xl italic">
+            Future words are subject to change.
           </p>
         )}
       </main>
