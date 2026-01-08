@@ -64,7 +64,7 @@ export function WordleNavigation({
       </span>
     ) : (
       <Link
-        className="p-1 rounded hover:bg-gray-800 transition-colors"
+        className="p-1 rounded dark:hover:bg-gray-800 hover:bg-gray-200 transition-colors"
         aria-label="Previous Wordle"
         href={`/?date=${prevDateString}`}
       >
@@ -78,7 +78,7 @@ export function WordleNavigation({
       <>
         <button
           type="button"
-          className="p-1 rounded hover:bg-gray-800 hover:cursor-pointer transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-gray-900"
+          className="p-1 rounded dark:hover:bg-red-600 hover:bg-red-400 hover:cursor-pointer transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-gray-900"
           aria-label="Next Wordle (spoiler warning)"
           onClick={() => setIsDialogOpen(true)}
         >
@@ -94,12 +94,12 @@ export function WordleNavigation({
             onClick={handleOverlayClick}
           >
             <div
-              className="w-full max-w-md rounded-lg bg-[#121213] p-6 text-left shadow-lg outline-none"
+              className="w-full max-w-md rounded-lg dark:bg-[#121212] bg-gray-200 p-6 text-left shadow-lg outline-none"
               tabIndex={-1}
             >
               <h2
                 id="spoiler-dialog-title"
-                className="text-xl font-semibold text-white"
+                className="text-xl font-semibold dark:text-white text-black"
               >
                 <OctagonAlert className="inline mr-2" />
                 ACHTUNG! Spoiler Ahead!
@@ -107,17 +107,19 @@ export function WordleNavigation({
               <div className="mt-2 border-t border-gray-700"></div>
               <p
                 id="spoiler-dialog-description"
-                className="mt-2 text-md text-gray-300"
+                className="mt-2 text-md dark:text-gray-300 text-gray-700"
               >
                 Clicking next will reveal tomorrow&apos;s Wordle solution.
               </p>
               <br />
-              <p className="font-bold">Are you sure whatever you're doing is worth it?</p>
+              <p className="font-bold">
+                Are you sure whatever you're doing is worth it?
+              </p>
               <div className="mt-6 flex justify-end gap-3">
                 <button
                   ref={cancelButtonRef}
                   type="button"
-                  className="rounded-md border border-gray-600 px-4 py-2 text-sm font-medium text-gray-200 transition hover:bg-gray-800 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-gray-900"
+                  className="rounded-md border border-gray-600 px-4 py-2 text-sm font-medium transition dark:hover:bg-gray-800 hover:bg-gray-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-gray-900"
                   onClick={() => setIsDialogOpen(false)}
                 >
                   No, stay here
@@ -140,7 +142,7 @@ export function WordleNavigation({
   } else if (canAdvance) {
     nextControl = (
       <Link
-        className="p-1 rounded hover:bg-gray-800 transition-colors"
+        className="p-1 rounded dark:hover:bg-gray-800 hover:bg-gray-200 transition-colors"
         aria-label="Next Wordle"
         href={`/?date=${nextDateString}`}
       >
@@ -153,12 +155,14 @@ export function WordleNavigation({
 
   return (
     <div className="mt-4">
-      <div className="flex items-center gap-2 text-base md:text-lg text-gray-400 font-mono">
+      <div className="flex items-center gap-2 text-base md:text-lg dark:text-gray-400 text-gray-700 font-mono">
         {previousControl}
         <span>{wordNum ? `Wordle #${wordNum}` : "Wordle"}</span>
         {nextControl}
       </div>
-      <p className="items-center text-sm text-gray-500 font-mono md:text-base">{printDate}</p>
+      <p className="items-center text-sm dark:text-gray-500 text-gray-600 font-mono md:text-base">
+        {printDate}
+      </p>
     </div>
   );
 }
