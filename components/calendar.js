@@ -1,1 +1,1 @@
-"use clint";
+"use client";
