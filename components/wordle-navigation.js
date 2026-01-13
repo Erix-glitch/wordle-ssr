@@ -3,7 +3,8 @@
 import { useEffect, useRef, useState, useCallback } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { MoveLeft, MoveRight, OctagonAlert } from "lucide-react";
+import { MoveLeft, MoveRight, OctagonAlert, CalendarSearch } from "lucide-react";
+import { Toaster, toast } from 'sonner'
 
 export function WordleNavigation({
   wordNum,
@@ -17,6 +18,7 @@ export function WordleNavigation({
   const router = useRouter();
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const cancelButtonRef = useRef(null);
+  const [spoilerAcknowledged, setSpoilerAcknowledged] = useState(false);
 
   useEffect(() => {
     if (isDialogOpen && cancelButtonRef.current) {
@@ -42,6 +44,7 @@ export function WordleNavigation({
 
   const handleConfirm = useCallback(() => {
     setIsDialogOpen(false);
+    setSpoilerAcknowledged(true);
     router.push(`/?date=${nextDateString}`);
   }, [router, nextDateString]);
 
@@ -57,6 +60,15 @@ export function WordleNavigation({
     </span>
   );
 
+  const enabledNextControl = (
+    <Link
+      className="p-1 rounded dark:hover:bg-gray-800 hover:bg-gray-200 transition-colors"
+      aria-label="Next Wordle"
+      href={`/?date=${nextDateString}`}
+    >
+      <MoveRight className="w-8" />
+    </Link>
+  );
   const previousControl =
     wordId === 1 ? (
       <span aria-disabled="true" className="p-1 rounded text-gray-600">
@@ -73,7 +85,7 @@ export function WordleNavigation({
     );
 
   let nextControl = null;
-  if (isSpoiler && canAdvance) {
+  if (isSpoiler && canAdvance && !spoilerAcknowledged) {
     nextControl = (
       <>
         <button
@@ -127,7 +139,10 @@ export function WordleNavigation({
                 <button
                   type="button"
                   className="rounded-md bg-red-400 px-4 py-2 text-sm font-semibold text-gray-900 transition hover:bg-red-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-gray-900"
-                  onClick={handleConfirm}
+                  onClick={() => {
+                    handleConfirm();
+                    toast.warning("Future words may be changed later!");
+                  }}
                 >
                   Yes, I hate myself
                 </button>
@@ -137,32 +152,36 @@ export function WordleNavigation({
         )}
       </>
     );
+  } else if (spoilerAcknowledged) {
+    nextControl = enabledNextControl;
   } else if (isSpoiler) {
     nextControl = disabledNextControl;
   } else if (canAdvance) {
-    nextControl = (
-      <Link
-        className="p-1 rounded dark:hover:bg-gray-800 hover:bg-gray-200 transition-colors"
-        aria-label="Next Wordle"
-        href={`/?date=${nextDateString}`}
-      >
-        <MoveRight className="w-8" />
-      </Link>
-    );
+    nextControl = enabledNextControl;
   } else {
     nextControl = disabledNextControl;
   }
 
   return (
-    <div className="mt-4">
-      <div className="flex items-center gap-2 text-base md:text-lg dark:text-gray-400 text-gray-700 font-mono">
-        {previousControl}
-        <span>{wordNum ? `Wordle #${wordNum}` : "Wordle"}</span>
-        {nextControl}
+    <>
+      <div className="mt-4">
+        <div className="flex items-center gap-2 text-base md:text-lg dark:text-gray-400 text-gray-700 font-mono">
+          {previousControl}
+          <span>{wordNum ? `Wordle #${wordNum}` : "Wordle"}</span>
+          {nextControl}
+        </div>
       </div>
-      <p className="items-center text-sm dark:text-gray-500 text-gray-600 font-mono md:text-base">
-        {printDate}
-      </p>
-    </div>
+      <button
+        type="button"
+        onClick={() => {
+          console.log("Select Wordle clicked");
+        }}
+        className="flex items-center text-sm dark:text-gray-500 text-gray-600 hover:bg-gray-800 px-2 rounded transition-colors font-mono md:text-base hover:cursor-pointer"
+        aria-label="Select Wordle"
+      >
+          {printDate}
+          <CalendarSearch className="inline ml-1.5 h-5 w-5"/>
+      </button>
+    </>
   );
 }

@@ -2,6 +2,8 @@
 import { Word, getLocalDateIso, parseLocalDate } from './Word.js';
 import { Nav } from '@/components/nav';
 import { WordleNavigation } from '@/components/wordle-navigation';
+import { Toaster, toast } from 'sonner'
+
 export const dynamic = 'force-dynamic';
 
 export default async function Page({ searchParams }) {
@@ -36,6 +38,7 @@ export default async function Page({ searchParams }) {
 
   return (
     <>
+    <Toaster richColors theme='dark'/>
     <Nav />
       <main className="flex flex-col items-center justify-center min-h-screen text-auto text-center px-6 py-12">
         <h1 className="text-4xl md:text-6xl font-bold tracking-tight drop-shadow-sm">
