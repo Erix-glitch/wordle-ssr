@@ -4,7 +4,7 @@ import { useEffect, useRef, useState, useCallback } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { MoveLeft, MoveRight, OctagonAlert, CalendarSearch } from "lucide-react";
-import { Toaster, toast } from 'sonner'
+import { Toaster, toast } from "sonner";
 
 export function WordleNavigation({
   wordNum,
@@ -14,11 +14,15 @@ export function WordleNavigation({
   printDate,
   isSpoiler,
   canAdvance,
+  isoDate,
 }) {
   const router = useRouter();
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const cancelButtonRef = useRef(null);
   const [spoilerAcknowledged, setSpoilerAcknowledged] = useState(false);
+  const dateInputRef = useRef(null);
+  const now = new Date();
+  const todayString = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, "0")}-${String(now.getDate()).padStart(2, "0")}`;
 
   useEffect(() => {
     if (isDialogOpen && cancelButtonRef.current) {
@@ -53,6 +57,16 @@ export function WordleNavigation({
       setIsDialogOpen(false);
     }
   };
+
+  const handleDateChange = useCallback(
+    (e) => {
+      const value = e.target.value;
+      if (value) {
+        router.push(`/?date=${value}`);
+      }
+    },
+    [router]
+  );
 
   const disabledNextControl = (
     <span aria-disabled="true" className="p-1 rounded text-gray-600">
@@ -171,17 +185,35 @@ export function WordleNavigation({
           {nextControl}
         </div>
       </div>
-      <button
-        type="button"
-        onClick={() => {
-          console.log("Select Wordle clicked");
-        }}
-        className="flex items-center text-sm dark:text-gray-500 text-gray-600 hover:bg-gray-800 px-2 rounded transition-colors font-mono md:text-base hover:cursor-pointer"
-        aria-label="Select Wordle"
-      >
+      <div className="flex items-center gap-1">
+        <button
+          type="button"
+          onClick={() => dateInputRef.current?.showPicker()}
+          className="relative flex items-center text-sm dark:text-gray-500 text-gray-600 dark:hover:bg-gray-800 hover:bg-gray-200 px-2 rounded transition-colors font-mono md:text-base hover:cursor-pointer"
+          aria-label="Select Wordle by date"
+        >
           {printDate}
-          <CalendarSearch className="inline ml-1.5 h-5 w-5"/>
-      </button>
+          <CalendarSearch className="inline ml-1.5 h-5 w-5" />
+          <input
+            ref={dateInputRef}
+            type="date"
+            value={isoDate ?? ""}
+            min="2021-06-19"
+            onChange={handleDateChange}
+            className="absolute inset-0 opacity-0 pointer-events-none"
+            tabIndex={-1}
+            aria-hidden="true"
+          />
+        </button>
+        {isoDate !== todayString && (
+          <Link
+            href="/"
+            className="text-xs dark:text-gray-500 text-gray-500 dark:hover:text-gray-300 hover:text-gray-800 dark:hover:bg-gray-800 hover:bg-gray-200 px-1.5 py-0.5 rounded transition-colors font-mono"
+          >
+            Today
+          </Link>
+        )}
+      </div>
     </>
   );
 }

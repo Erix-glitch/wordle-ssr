@@ -9,7 +9,7 @@ export const dynamic = 'force-dynamic';
 export default async function Page({ searchParams }) {
   const resolvedSearchParams = searchParams ? await searchParams : {};
   const dateParam = typeof resolvedSearchParams.date === 'string' ? resolvedSearchParams.date : undefined;
-  const { solution, wordNum, printDate, isoDate, apiError, wordId} = await Word(dateParam);
+  const { solution, wordNum, printDate, isoDate, apiError, wordId } = await Word(dateParam);
 
   const currentDate = parseLocalDate(isoDate) ?? new Date();
   const previousDate = new Date(currentDate);
@@ -29,15 +29,15 @@ export default async function Page({ searchParams }) {
   const failureMessage = isNotFoundError
     ? 'No puzzle is available for this date yet.'
     : 'Could not load the Wordle word for this date.';
-  
+
   // render html
   const letters = solution?.split('') ?? [];
   const error = "ERROR".split('');
 
   return (
     <>
-    <Toaster richColors theme='dark'/>
-    <Nav />
+      <Toaster richColors theme='dark' />
+      <Nav />
       <main className="flex flex-col items-center justify-center min-h-screen text-auto text-center px-6 py-12">
         <h1 className="text-4xl md:text-6xl font-bold tracking-tight drop-shadow-sm">
           Today&apos;s Wordle Word
@@ -56,18 +56,18 @@ export default async function Page({ searchParams }) {
           </div>
         ) : (
           <>
-          <div className="mt-8 flex space-x-1.5">
-            {error.map((letter, index) => (
-              <div
-                key={`${letter}-${index}`}
-                className="flex h-[62px] md:h-[72px] md:w-[72px] w-[62px] items-center justify-center bg-[#a94f4f] text-4xl md:text-[40px] font-wordle font-bold uppercase text-white animate-flip"
-                style={{ animationDelay: `${index * 0.25}s` }}
-              >
-                {letter}
-              </div>
-            ))}
-          </div>
-          <p className="mt-6 font-mono text-xl text-red-500">{failureMessage}</p>
+            <div className="mt-8 flex space-x-1.5">
+              {error.map((letter, index) => (
+                <div
+                  key={`${letter}-${index}`}
+                  className="flex h-[62px] md:h-[72px] md:w-[72px] w-[62px] items-center justify-center bg-[#a94f4f] text-4xl md:text-[40px] font-wordle font-bold uppercase text-white animate-flip"
+                  style={{ animationDelay: `${index * 0.25}s` }}
+                >
+                  {letter}
+                </div>
+              ))}
+            </div>
+            <p className="mt-6 font-mono text-xl text-red-500">{failureMessage}</p>
           </>
         )}
         <WordleNavigation
@@ -78,6 +78,7 @@ export default async function Page({ searchParams }) {
           printDate={printDate ?? isoDate}
           isSpoiler={shouldShowSpoilerWarning}
           canAdvance={canAdvance}
+          isoDate={isoDate}
         />
       </main>
     </>
