@@ -7,7 +7,8 @@ export function Nav() {
   const pathname = usePathname();
 
   const links = [
-    { href: "/", label: <span className="">Answer</span> },
+    { href: "/", label: <span className="">Answer</span> }
+    /*
     {
       href: "/art",
       label: (
@@ -16,6 +17,7 @@ export function Nav() {
         </span>
       ),
     },
+    */
   ];
 
   return (
