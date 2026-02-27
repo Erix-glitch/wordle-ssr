@@ -5,9 +5,10 @@ import { usePathname } from "next/navigation";
 
 export function Nav() {
   const pathname = usePathname();
-
+  
   const links = [
-    { href: "/", label: <span className="">Answer</span> }
+    { href: "/", label: <span className="">Answer</span> },
+    { href: "/list", label: <span className="">List</span> }
     /*
     {
       href: "/art",
