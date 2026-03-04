@@ -7,7 +7,7 @@ export function DisplayWord({ word, date }) {
                 {letters.map((letter, index) => (
                     <div
                         key={`${letter}-${index}`}
-                        className="flex h-[16px] w-[16px] items-center justify-center bg-[#538d4e] text-sm font-wordle font-bold uppercase text-white animate-flip"
+                        className="flex h-[32px] w-[32px] items-center justify-center bg-[#538d4e] text-base font-wordle font-bold uppercase text-white animate-flip"
                         style={{ animationDelay: `${index * 0.25}s` }}
                     >
                         {letter}

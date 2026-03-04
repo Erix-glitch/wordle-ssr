@@ -11,14 +11,18 @@ export default async function Page({ }) {
         <>
             <Nav />
             <main className="flex flex-col items-center justify-center min-h-screen text-auto text-center px-6 py-12">
-                <h1 className="text-2xl md:text-6xl font-bold tracking-tight drop-shadow-sm mt-8">
+                <h1 className="text-2xl md:text-5xl font-bold tracking-tight mt-8 mb-2">
                     List of Words
                 </h1>
-                
-                <div className="mt-8">
-                    <ul className="list-none pl-5 pr-5 pt-2 pb-2 rounded border-2 border-solid">
+                <p className="text-sm text-foreground/50 mb-6">Last 100 days of Wordle answers</p>
+
+                <div className="w-full max-w-md">
+                    <ul className="list-none divide-y divide-foreground/10">
                         {words.map((word, index) => (
-                            <li key={index} className="flex items-center gap-2"><DisplayWord word={word.solution} /> — {word.isoDate}</li>
+                            <li key={index} className="flex items-center justify-between px-4 py-3 hover:bg-foreground/5 transition-colors rounded">
+                                <DisplayWord word={word.solution} />
+                                <span className="text-xs text-foreground/40 font-mono">{word.isoDate}</span>
+                            </li>
                         ))}
                     </ul>
                 </div>
