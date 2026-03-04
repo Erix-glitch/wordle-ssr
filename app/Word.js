@@ -78,3 +78,22 @@ export async function Word(dateString) {
 
     return { solution, wordNum, printDate, isoDate, apiError, wordId };
 }
+
+export async function getWordList(startDateString, endDateString) {
+    const words = [];
+    let currentDate = parseLocalDate(startDateString);
+    const endDate = parseLocalDate(endDateString);
+    if (!currentDate || !endDate) return words;
+
+    while (currentDate <= endDate) {
+        const dateStr = getLocalDateIso(currentDate);
+        const { solution, isoDate, apiError } = await Word(dateStr);
+        if (apiError) {
+            console.error(`Error fetching word for ${isoDate}:`, apiError);
+            break;
+        }
+        words.push({ solution, isoDate });
+        currentDate.setDate(currentDate.getDate() + 1);
+    }
+    return words;
+}
