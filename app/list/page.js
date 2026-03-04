@@ -21,7 +21,7 @@ export default async function Page({ }) {
                         {words.map((word, index) => (
                             <li key={index} className="flex items-center justify-between px-4 py-3 hover:bg-foreground/5 transition-colors rounded">
                                 <DisplayWord word={word.solution} />
-                                <span className="text-xs text-foreground/40 font-mono">{word.isoDate}</span>
+                                <span className="text-sm text-foreground/40 font-mono">{word.isoDate}</span>
                             </li>
                         ))}
                     </ul>
