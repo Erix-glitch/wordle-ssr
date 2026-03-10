@@ -1,6 +1,5 @@
 export function DisplayWord({ word, date }) {
     const letters = word?.split('') ?? [];
-    console.log('Displaying word:', word, 'on date:', date);
     return (
         <>
             <div className="flex space-x-1.5">
