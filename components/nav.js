@@ -8,8 +8,7 @@ export function Nav() {
   
   const links = [
     { href: "/", label: <span className="">Answer</span> },
-    { href: "/list", label: <span className="">List</span> }
-    /*
+    { href: "/list", label: <span className="">List</span> },
     {
       href: "/art",
       label: (
@@ -18,7 +17,6 @@ export function Nav() {
         </span>
       ),
     },
-    */
   ];
 
   return (
