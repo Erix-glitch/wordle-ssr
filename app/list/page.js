@@ -4,7 +4,7 @@ import WordList from './word-list.js';
 
 export default async function Page({ }) {
     const startDate = new Date();
-    startDate.setDate(startDate.getDate() - 50);
+    startDate.setDate(startDate.getDate() - 10); // load only ten words initially so its not (as) slow on first load
     const startDateString = startDate.toISOString().split('T')[0];
     const endDateString = new Date().toISOString().split('T')[0];
     const words = (await getWordList(startDateString, endDateString)).reverse();

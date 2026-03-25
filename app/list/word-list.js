@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { DisplayWord } from '@/components/fancyword.js';
 import { fetchMoreWords } from './actions.js';
+import { Toaster, toast } from 'sonner'
 
 export default function WordList({ initialWords }) {
     const [words, setWords] = useState(initialWords);
@@ -15,13 +16,19 @@ export default function WordList({ initialWords }) {
             if (!oldestDate) return;
             const moreWords = await fetchMoreWords(oldestDate, 50);
             setWords((prev) => [...prev, ...moreWords]);
-        } finally {
+            // throw new Error("lol");
+        } catch (e) {
+            console.log(`error loading more words: ${e}`);
+            toast.error("Error loading more words; you likely hit the end!");
+        }
+        finally {
             setLoading(false);
         }
     };
 
     return (
         <div className="w-full max-w-md">
+            <Toaster richColors theme='dark' />
             <ul className="list-none divide-y divide-foreground/10">
                 {words.map((word, index) => (
                     <li key={index} className="flex items-center justify-between px-4 py-3 hover:bg-foreground/5 transition-colors rounded">
@@ -30,6 +37,7 @@ export default function WordList({ initialWords }) {
                     </li>
                 ))}
             </ul>
+            
             <button
                 onClick={loadMore}
                 disabled={loading}

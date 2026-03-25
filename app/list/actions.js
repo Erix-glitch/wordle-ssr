@@ -1,7 +1,8 @@
 'use server';
 
 import { getWordList } from '../Word.js';
-
+// TODO: Make it faster, this is slow as shit (takes 5 seconds to render the first time without cache).
+// but I also don't want to slam the NYT api 
 export async function fetchMoreWords(endDateString, count = 50) {
     const endDate = new Date(endDateString);
     endDate.setDate(endDate.getDate() - 1); // start from the day before the last loaded date
